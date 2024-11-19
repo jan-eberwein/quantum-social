@@ -1,6 +1,8 @@
 # Quantum Social App 
+Simple Social Media.
 
-### To run the code:
+
+### To run the app: 
 ```js
 npm run dev
 ```
