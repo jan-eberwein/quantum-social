@@ -1,6 +1,6 @@
-import { INewUser } from "@/types";
 import { ID, Query } from "appwrite";
-import { account, appwriteConfig, avatars, databases } from "./config";
+import { appwriteConfig, account, databases, storage, avatars } from "./config";
+import { INewUser } from "@/types";
 
 export async function createUserAccount(user: INewUser) {
   try {
@@ -20,11 +20,12 @@ export async function createUserAccount(user: INewUser) {
       name: newAccount.name,
       email: newAccount.email,
       username: user.username,
-      imageUrl: new URL(avatarUrl),
+      imageUrl: avatarUrl,
     });
+
     return newUser;
   } catch (error) {
-    console.error(error);
+    console.log(error);
     return error;
   }
 }
@@ -33,7 +34,7 @@ export async function saveUserToDB(user: {
   accountId: string;
   email: string;
   name: string;
-  imageUrl: URL;
+  imageUrl: string;
   username?: string;
 }) {
   try {
@@ -46,23 +47,33 @@ export async function saveUserToDB(user: {
 
     return newUser;
   } catch (error) {
-    console.error(error);
+    console.log(error);
   }
 }
 
 export async function signInAccount(user: { email: string; password: string }) {
   try {
     const session = await account.createSession(user.email, user.password);
+
     return session;
   } catch (error) {
-    console.error(error);
+    console.log(error);
   }
 }
 
+export async function getAccount() {
+  try {
+    const currentAccount = await account.get();
+
+    return currentAccount;
+  } catch (error) {
+    console.log(error);
+  }
+}
 
 export async function getCurrentUser() {
   try {
-    const currentAccount = await account.get();
+    const currentAccount = await getAccount();
 
     if (!currentAccount) throw Error;
 
