@@ -14,7 +14,7 @@ const AuthLayout = () => {
           </section>
 
           <img
-            src="/assets/images/side-image.png"
+            src="/assets/images/quantum.jpeg"
             alt="side image"
             className="hidden xl:block h-screen w-1/2 object-cover bg-no-repeat"
           />
