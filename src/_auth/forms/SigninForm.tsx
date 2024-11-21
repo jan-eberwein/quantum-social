@@ -12,18 +12,15 @@ import { useToast } from "@/hooks/use-toast";
 import { useUserContext } from "@/context/AuthContext";
 import { useSignInAccount } from "@/lib/react-query/queriesAndMutations";
 
+import { SigninValidation } from "@/lib/validation";
+
 const SigninForm = () => {
   const { toast } = useToast();
   const navigate = useNavigate();
   const { checkAuthUser, isLoading: isUserLoading } = useUserContext();
 
   // Query
-  const { mutateAsync: signInAccount, isLoading } = useSignInAccount();
-
-  const SigninValidation = z.object({
-    email: z.string().email(),
-    password: z.string().min(6),
-  });
+  const { mutateAsync: signInAccount } = useSignInAccount();
 
   const form = useForm<z.infer<typeof SigninValidation>>({
     resolver: zodResolver(SigninValidation),
@@ -91,7 +88,7 @@ const SigninForm = () => {
           />
 
           <Button type="submit" className="shad-button_primary">
-            {isLoading || isUserLoading ? (
+            { isUserLoading ? (
               <div className="flex-center gap-2">
                 <Loader /> Loading...
               </div>
