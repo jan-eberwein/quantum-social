@@ -48,7 +48,9 @@ const LeftSidebar = () => {
             return (
               <li
                 key={link.label}
-                className={`leftsidebar-link group ${isActive && "bg-primary-500"}`}
+                className={`leftsidebar-link group ${
+                  isActive && "bg-primary-500"
+                }`}
               >
                 <NavLink
                   to={link.route}
@@ -57,14 +59,30 @@ const LeftSidebar = () => {
                   <img
                     src={link.imgURL}
                     alt={link.label}
-                    className={`group-hover:invert-white w-8 ${isActive ? "invert-white" : ""}`} />
+                    className={`group-hover:invert-white w-8 ${
+                      isActive ? "invert-white" : ""
+                    }`}
+                  />
                   {link.label}
                 </NavLink>
-              </li> 
+              </li>
             );
           })}
         </ul>
       </div>
+      <Button
+        variant="ghost"
+        className="shad-button_ghost"
+        onClick={() => signOut}
+      >
+        <img
+          src="/assets/icons/LogoutIcon.png"
+          alt="logout"
+          width={40}
+          height={40}
+        /> 
+        <p className="small-medium lg:base-medium">Logout</p>
+      </Button>
     </nav>
   );
 };
