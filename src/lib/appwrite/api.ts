@@ -1,6 +1,6 @@
 import { ID, Query } from "appwrite";
 import { appwriteConfig, account, databases, storage, avatars } from "./config";
-import {INewPost, INewUser} from "@/types";
+import { INewPost, INewUser } from "@/types";
 
 export async function createUserAccount(user: INewUser) {
   try {
@@ -53,8 +53,11 @@ export async function saveUserToDB(user: {
 
 export async function signInAccount(user: { email: string; password: string }) {
   try {
-    const session = await account.createEmailPasswordSession(user.email, user.password);
-    
+    const session = await account.createEmailPasswordSession(
+      user.email,
+      user.password
+    );
+
     return session;
   } catch (error) {
     console.log(error);
@@ -71,7 +74,7 @@ export async function signOutAccount() {
 
 export async function getAccount() {
   try {
-    const currentAccount = await account.get();  
+    const currentAccount = await account.get();
     return currentAccount;
   } catch (error) {
     console.log(error);
@@ -118,17 +121,17 @@ export async function createPost(post: INewPost) {
 
     // Create post
     const newPost = await databases.createDocument(
-        appwriteConfig.databaseId,
-        appwriteConfig.postCollectionId,
-        ID.unique(),
-        {
-          creator: post.userId,
-          caption: post.caption,
-          imageUrl: fileUrl,
-          imageId: uploadedFile.$id,
-          location: post.location,
-          tags: tags,
-        }
+      appwriteConfig.databaseId,
+      appwriteConfig.postCollectionId,
+      ID.unique(),
+      {
+        creator: post.userId,
+        caption: post.caption,
+        imageUrl: fileUrl,
+        imageId: uploadedFile.$id,
+        location: post.location,
+        tags: tags,
+      }
     );
 
     if (!newPost) {
@@ -145,9 +148,9 @@ export async function createPost(post: INewPost) {
 export async function uploadFile(file: File) {
   try {
     const uploadedFile = await storage.createFile(
-        appwriteConfig.storageId,
-        ID.unique(),
-        file
+      appwriteConfig.storageId,
+      ID.unique(),
+      file
     );
 
     return uploadedFile;
@@ -159,12 +162,12 @@ export async function uploadFile(file: File) {
 export function getFilePreview(fileId: string) {
   try {
     const fileUrl = storage.getFilePreview(
-        appwriteConfig.storageId,
-        fileId,
-        2000,
-        2000,
-        "top",
-        100
+      appwriteConfig.storageId,
+      fileId,
+      2000,
+      2000,
+      "top",
+      100
     );
 
     if (!fileUrl) throw Error;
@@ -187,12 +190,64 @@ export async function deleteFile(fileId: string) {
 
 export async function getRecentPosts() {
   const posts = await databases.listDocuments(
-      appwriteConfig.databaseId,
-      appwriteConfig.postCollectionId,
-      [Query.orderDesc('$createdAt'), Query.limit(20)]
-  )
+    appwriteConfig.databaseId,
+    appwriteConfig.postCollectionId,
+    [Query.orderDesc("$createdAt"), Query.limit(20)]
+  );
 
   if (!posts) throw Error;
 
   return posts;
+}
+
+export async function likePost(postId: string, likesArray: string[]) {
+  try {
+    const updatedPost = await databases.updateDocument(
+      appwriteConfig.databaseId,
+      appwriteConfig.postCollectionId,
+      postId,
+      {
+        likes: likesArray,
+      }
+    );
+    if (!updatedPost) throw Error;
+
+    return updatedPost;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export async function savePost(postId: string, userId: string) {
+  try {
+    const updatedPost = await databases.createDocument(
+      appwriteConfig.databaseId,
+      appwriteConfig.savesCollectionId,
+      ID.unique(),
+      {
+        user: userId,
+        post: postId,
+      }
+    );
+    if (!updatedPost) throw Error;
+
+    return updatedPost;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export async function deleteSavedPost(savedId: string) {
+  try {
+    const status = await databases.deleteDocument(
+      appwriteConfig.databaseId,
+      appwriteConfig.savesCollectionId,
+      savedId
+    );
+    if (!status) throw Error;
+
+    return { status: "ok" };
+  } catch (error) {
+    console.log(error);
+  }
 }
