@@ -1,6 +1,6 @@
 import { ID, Query } from "appwrite";
 import { appwriteConfig, account, databases, storage, avatars } from "./config";
-import {INewPost, INewUser, IUpdatePost} from "@/types";
+import { INewPost, INewUser, IUpdatePost } from "@/types";
 
 export async function createUserAccount(user: INewUser) {
   try {
@@ -257,9 +257,9 @@ export async function getPostById(postId?: string) {
 
   try {
     const post = await databases.getDocument(
-        appwriteConfig.databaseId,
-        appwriteConfig.postCollectionId,
-        postId
+      appwriteConfig.databaseId,
+      appwriteConfig.postCollectionId,
+      postId
     );
 
     if (!post) throw Error;
@@ -299,16 +299,16 @@ export async function updatePost(post: IUpdatePost) {
 
     //  Update post
     const updatedPost = await databases.updateDocument(
-        appwriteConfig.databaseId,
-        appwriteConfig.postCollectionId,
-        post.postId,
-        {
-          caption: post.caption,
-          imageUrl: image.imageUrl,
-          imageId: image.imageId,
-          location: post.location,
-          tags: tags,
-        }
+      appwriteConfig.databaseId,
+      appwriteConfig.postCollectionId,
+      post.postId,
+      {
+        caption: post.caption,
+        imageUrl: image.imageUrl,
+        imageId: image.imageId,
+        location: post.location,
+        tags: tags,
+      }
     );
 
     // Failed to update
@@ -338,9 +338,9 @@ export async function deletePost(postId?: string, imageId?: string) {
 
   try {
     const statusCode = await databases.deleteDocument(
-        appwriteConfig.databaseId,
-        appwriteConfig.postCollectionId,
-        postId
+      appwriteConfig.databaseId,
+      appwriteConfig.postCollectionId,
+      postId
     );
 
     if (!statusCode) throw Error;
@@ -348,6 +348,46 @@ export async function deletePost(postId?: string, imageId?: string) {
     await deleteFile(imageId);
 
     return { status: "Ok" };
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export async function getInfinitPosts({
+  pageParameters,
+}: {
+  pageParameters: number;
+}) {
+  const qposts: any[] = [Query.orderDesc("$updatedAt"), Query.limit(10)];
+
+  if (pageParameters) {
+    qposts.push(Query.cursorAfter(pageParameters.toString()));
+  }
+
+  try {
+    const posts = await databases.listDocuments(
+      appwriteConfig.databaseId,
+      appwriteConfig.postCollectionId,
+      qposts
+    );
+
+    if (!posts) throw Error;
+
+    return posts;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export async function searchPosts(searchTerm: string) {
+  try {
+    const posts = await databases.listDocuments(
+      appwriteConfig.databaseId,
+      appwriteConfig.postCollectionId,
+      [Query.search("caption", searchTerm)]
+    );
+    if (!posts) throw Error;
+    return posts;
   } catch (error) {
     console.log(error);
   }
