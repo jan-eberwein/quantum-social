@@ -81,7 +81,7 @@ const PostDetails = () => {
                         to={`/update-post/${post?.$id}`}
                         className={`${user.id !== post?.creator.$id && "hidden"}`}>
                       <img
-                          src={"/assets/icons/edit.svg"}
+                          src={"/assets/icons/edit1.svg"}
                           alt="edit"
                           width={24}
                           height={24}
@@ -95,7 +95,7 @@ const PostDetails = () => {
                             user.id !== post?.creator.$id && "hidden"
                         }`}>
                       <img
-                          src={"/assets/icons/delete.svg"}
+                          src={"/assets/icons/delete1.svg"}
                           alt="delete"
                           width={24}
                           height={24}
