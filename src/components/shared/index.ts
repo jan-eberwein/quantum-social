@@ -4,3 +4,5 @@ export { default as Loader } from "./Loader";
 export { default as Topbar } from "./Topbar";
 export { default as FileUploader } from "./FileUploader";
 export { default as PostStats } from "./PostStats";
+export { default as GridPostList } from "./GridPostList";
+export { default as ProfileUploader } from "./ProfileUploader";

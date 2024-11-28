@@ -44,3 +44,5 @@ export function formatDateString(dateString: string) {
 
   return `${formatted} at ${time}`;
 }
+
+export const convertFileToUrl = (file: File) => URL.createObjectURL(file);

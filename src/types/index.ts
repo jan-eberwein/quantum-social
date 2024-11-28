@@ -4,7 +4,6 @@ export type IUser = {
   username: string;
   email: string;
   imageUrl: URL;
-  file: File[];
   bio: string;
 };
 
@@ -15,7 +14,7 @@ export type INewUser = {
   password: string;
 };
 
-export type IUpdateUser = {
+/*export type IUpdateUser = {
   userId: string;
   name: string;
   username: string;
@@ -23,7 +22,17 @@ export type IUpdateUser = {
   bio: string;
   imageId: string;
   imageUrl: URL | string;
+};*/
+
+export type IUpdateUser = {
+  userId: string;
+  name: string;
+  bio: string;
+  imageId: string;
+  imageUrl: URL | string;
+  file: File[];
 };
+
 
 export type INavLink = {
   imgURL: string;
