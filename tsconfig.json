@@ -8,6 +8,7 @@
     "esModuleInterop": true,
     "skipLibCheck": true,
     "baseUrl": ".",
+    "types": ["jest", "@testing-library/jest-dom", "vite/client"],
     "paths": {
       "*": ["node_modules/*"],
       "@/*": ["./src/*"]

@@ -61,7 +61,7 @@ const LeftSidebar = () => {
         </Link>
         <Link to={`/profile/${user?.id}`} className="flex items-center gap-3">
           <img
-            src={user.imageUrl || "/assets/images/profile-picture-dummy.png"}
+            src={user.imageUrl ? user.imageUrl.toString() : "/assets/images/profile-picture-dummy.png"}
             alt="profile"
             className="rounded-full h-8 w-8"
           />
