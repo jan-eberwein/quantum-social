@@ -19,8 +19,9 @@ import {
   signInAccount,
   signOutAccount,
   updatePost,
+  updateProfile,
 } from "../appwrite/api";
-import { INewPost, INewUser, IUpdatePost } from "@/types";
+import { INewPost, INewUser, IUpdatePost, IUpdateUser } from "@/types";
 import { QUERY_KEYS } from "@/lib/react-query/queryKeys";
 
 export const useCreateUserAccount = () => {
@@ -28,6 +29,12 @@ export const useCreateUserAccount = () => {
     mutationFn: (user: INewUser) => createUserAccount(user),
   });
 };
+
+export const useUpdateProfile = () => {
+  return useMutation({
+    mutationFn: (user: IUpdateUser) => updateProfile(user),
+  });
+}
 
 export const useSignInAccount = () => {
   return useMutation({
@@ -186,3 +193,7 @@ export const useSearchPosts = (searchValue: string) => {
     enabled: !!searchValue,
   });
 };
+
+
+
+

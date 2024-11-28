@@ -28,14 +28,25 @@ const Profile = () => {
         {/* Profile Details Section */}
         <div className="max-w-5xl flex items-center gap-5 w-full mt-4">
           <img
-            src={user?.imageUrl || "/assets/icons/profile-placeholder.svg"}
+            src={
+              user?.imageUrl?.toString() ||
+              "/assets/icons/profile-placeholder.svg"
+            }
             alt="profile"
             className="rounded-full h-10 w-10"
           />
           <div className="profile-info">
-            <h3 className="h3-bold">{user?.name}</h3>
+            <h4 className="h3-bold">@ {user?.username}</h4>
             <p className="small-medium">{user?.email}</p>
           </div>
+        </div>
+        <div className="max-w-5xl flex items-center gap-3 justify-start w-full">
+          <p className="small-medium">{user?.bio}</p>
+        </div>
+
+        {/* Image Feed - show image in Grid with GridPost List  */}
+        <div className="max-w-5xl flex items-center gap-3 justify-start w-full">
+            {/* --------- TODO --------- /> */}
         </div>
       </div>
     </div>

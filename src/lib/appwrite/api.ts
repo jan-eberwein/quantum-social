@@ -1,6 +1,6 @@
 import { ID, Query } from "appwrite";
 import { appwriteConfig, account, databases, storage, avatars } from "./config";
-import { INewPost, INewUser, IUpdatePost } from "@/types";
+import { INewPost, INewUser, IUpdatePost, IUpdateUser } from "@/types";
 
 export async function createUserAccount(user: INewUser) {
   try {
@@ -27,6 +27,61 @@ export async function createUserAccount(user: INewUser) {
   } catch (error) {
     console.log(error);
     return error;
+  }
+}
+
+export async function updateProfile(user: IUpdateUser) {
+  /*
+    IUpdateUser = {
+      userId: string;
+      name: string;
+      bio: string;
+      imageId: string;
+      imageUrl: URL | string;
+      file: File[];
+    }
+  */
+
+  try {
+    let imageUrl = user.imageUrl;
+
+    if (user.file.length > 0) {
+      // Upload new file to appwrite storage
+      const uploadedFile = await uploadFile(user.file[0]);
+      if (!uploadedFile) throw Error;
+
+      // Get new file url
+      const previewUrl = getFilePreview(uploadedFile.$id);
+      if (!previewUrl) {
+        await deleteFile(uploadedFile.$id);
+        throw Error;
+      }
+      imageUrl = previewUrl;
+      if (!imageUrl) {
+        await deleteFile(uploadedFile.$id);
+        throw Error;
+      }
+
+      // Safely delete old file after successful update
+      await deleteFile(user.imageId);
+    }
+
+    // Update user
+    const updatedUser = await databases.updateDocument(
+      appwriteConfig.databaseId,
+      appwriteConfig.userCollectionId,
+      user.userId,
+      {
+        name: user.name,
+        imageUrl: imageUrl,
+      }
+    );
+
+    if (!updatedUser) throw Error;
+
+    return updatedUser;
+  } catch (error) {
+    console.log(error);
   }
 }
 

@@ -15,6 +15,7 @@ const App = () => {
         <Route element={<AuthLayout />}>
           <Route path="/sign-in" element={<SigninForm />} />
           <Route path="/sign-up" element={<SignupForm />} />
+          <Route path="*" element={<h1>Not Found 404</h1>} />
         </Route>
         {/* PRIVATE ROUTES - SIGNED IN */}
         <Route element={<RootLayout />}>
@@ -28,6 +29,7 @@ const App = () => {
           <Route path="/profile/:id/*" element={<Profile />} />
           <Route path="/update-profile/:id" element={<UpdateProfile />} />
           <Route path="/liked-posts" element={<LikedPosts />} />
+          <Route path="*" element={<h1>Not Found 404</h1>} />
         </Route>
       </Routes>
       <Toaster />
