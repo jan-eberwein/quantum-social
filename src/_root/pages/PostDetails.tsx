@@ -6,6 +6,7 @@ import { PostStats } from "@/components/shared";
 
 import {
   useGetPostById,
+  useDeletePost
 } from "@/lib/react-query/queriesAndMutations";
 import {formatDateString} from "@/lib/utils";
 import {useUserContext} from "@/context/AuthContext";
@@ -16,9 +17,13 @@ const PostDetails = () => {
   const { user } = useUserContext();
 
   const { data: post, isPending } = useGetPostById(id || '');
+  const { mutate: deletePost } = useDeletePost();
 
 
-  const handleDeletePost = () => {};
+  const handleDeletePost = () => {
+    deletePost({ postId: id, imageId: post?.imageId });
+    navigate(-1);
+  };
 
   return (
       <div className="post_details-container">
