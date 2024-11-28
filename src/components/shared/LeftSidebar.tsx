@@ -5,7 +5,36 @@ import { Button } from "../ui/button";
 import { useSignOutAccount } from "@/lib/react-query/queriesAndMutations";
 import { useUserContext } from "@/context/AuthContext";
 import { INavLink } from "@/types";
-import { sidebarLinks } from "@/constants";
+
+const sidebarLinks = [
+  {
+    imgURL: "/assets/icons/home.svg",
+    route: "/",
+    label: "Home",
+  },
+  {
+    imgURL: "/assets/icons/explore1.svg",
+    route: "/explore",
+    label: "Explore",
+  },
+  {
+    imgURL: "/assets/icons/people.svg",
+    route: "/all-users",
+    label: "People",
+  },
+  /*
+  {
+    imgURL: "/assets/icons/saved1.svg",
+    route: "/saved",
+    label: "Saved",
+  },
+  */
+  {
+    imgURL: "/assets/icons/createpost1.svg",
+    route: "/create-post",
+    label: "Create Post",
+  },
+];
 
 const LeftSidebar = () => {
   const { pathname } = useLocation();
@@ -17,7 +46,7 @@ const LeftSidebar = () => {
     if (isSuccess) {
       navigate(0);
     }
-  }, [isSuccess]);
+  }, [isSuccess, navigate]);
 
   return (
     <nav className="leftsidebar">
@@ -30,9 +59,7 @@ const LeftSidebar = () => {
             height={35}
           />
         </Link>
-          <Link
-              to={`/profile/${user?.id}`}
-              className="flex items-center gap-3">
+        <Link to={`/profile/${user?.id}`} className="flex items-center gap-3">
           <img
             src={user.imageUrl || "/assets/images/profile-picture-dummy.png"}
             alt="profile"
@@ -51,7 +78,15 @@ const LeftSidebar = () => {
               <li
                 key={link.label}
                 className={`leftsidebar-link group ${
-                  isActive && "bg-primary-500"
+                  link.label === "Create Post"
+                    ? `mt-20 ${
+                        isActive
+                          ? "bg-primary-500 text-white"
+                          : "bg-white text-primary-500 hover:bg-primary-500 hover:text-white"
+                      }`
+                    : isActive
+                    ? "bg-primary-500 text-white"
+                    : "text-primary-500 hover:bg-primary-500 hover:text-white"
                 }`}
               >
                 <NavLink
@@ -61,8 +96,10 @@ const LeftSidebar = () => {
                   <img
                     src={link.imgURL}
                     alt={link.label}
-                    className={`group-hover:invert-white w-8 ${
-                      isActive ? "invert-white" : ""
+                    className={`w-8 ${
+                      isActive || (link.label === "Create Post" && isActive)
+                        ? "invert-white"
+                        : "text-blue-500 group-hover:invert-white"
                     }`}
                   />
                   {link.label}
@@ -82,7 +119,7 @@ const LeftSidebar = () => {
           alt="logout"
           width={40}
           height={40}
-        /> 
+        />
         <p className="small-medium lg:base-medium">Logout</p>
       </Button>
     </nav>

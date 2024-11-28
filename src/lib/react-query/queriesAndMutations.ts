@@ -21,7 +21,8 @@ import {
   updatePost,
   updateProfile,
   getUserById,
-  updateUser
+  updateUser,
+  getUsers
 } from "../appwrite/api";
 import { INewPost, INewUser, IUpdatePost, IUpdateUser } from "@/types";
 import { QUERY_KEYS } from "@/lib/react-query/queryKeys";
@@ -216,5 +217,12 @@ export const useUpdateUser = () => {
         queryKey: [QUERY_KEYS.GET_USER_BY_ID, data?.$id],
       });
     },
+  });
+};
+
+export const useGetUsers = (limit?: number) => {
+  return useQuery({
+    queryKey: [QUERY_KEYS.GET_USERS],
+    queryFn: () => getUsers(limit),
   });
 };
