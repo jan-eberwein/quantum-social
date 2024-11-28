@@ -1,7 +1,7 @@
 import {Routes, Route } from 'react-router-dom';
 import './globals.css';
 import SigninForm from './_auth/forms/SigninForm';
-import { AllUsers, CreatePost, EditPost, Explore, Home, LikedPosts, PostDetails, Profile2, Saved, UpdateProfile2 } from './_root/pages';
+import { AllUsers, CreatePost, EditPost, Explore, Home, LikedPosts, PostDetails, Profile, Saved, UpdateProfile } from './_root/pages';
 import SignupForm from './_auth/forms/SignupForm';
 import AuthLayout from './_auth/AuthLayout';
 import RootLayout from './_root/RootLayout';
@@ -26,8 +26,8 @@ const App = () => {
           <Route path="/create-post" element={<CreatePost />} />
           <Route path="/update-post/:id" element={<EditPost />} />
           <Route path="/posts/:id" element={<PostDetails />} />
-          <Route path="/profile/:id/*" element={<Profile2 />} />
-          <Route path="/update-profile/:id" element={<UpdateProfile2 />} />
+          <Route path="/profile/:id/*" element={<Profile />} />
+          <Route path="/update-profile/:id" element={<UpdateProfile />} />
           <Route path="/liked-posts" element={<LikedPosts />} />
           <Route path="*" element={<h1>Not Found 404</h1>} />
         </Route>
