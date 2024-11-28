@@ -30,7 +30,7 @@ const Topbar = () => {
           >
             <img src="/assets/icons/LogoutIcon.png" alt="logout" width={40} height={40} />
           </Button>
-          <Link to={"/profile/${user?.id}"} className="flex-center gap-3">
+          <Link to={`/profile/${user?.id}`} className="flex items-center gap-3">
             <img
               src={user.imageUrl || "/assets/images/profile-placeholder.png"}
               alt="profile"
