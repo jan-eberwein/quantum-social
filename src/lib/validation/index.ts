@@ -26,3 +26,10 @@ export const PostValidation = z.object({
   location: z.string().min(1, { message: "This field is required" }).max(1000, { message: "Maximum 1000 characters." }),
   tags: z.string(),
 });
+
+export const ProfileUpdateValidation = z.object({
+  name: z.string().min(2, { message: "Name must be at least 2 characters long" }),
+  email: z.string().email({ message: "Invalid email address" }),
+  password: z.string().min(8, { message: "Password must be at least 8 characters long" }),
+});
+
