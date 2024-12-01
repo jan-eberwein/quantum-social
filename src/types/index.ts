@@ -3,7 +3,7 @@ export type IUser = {
   name: string;
   username: string;
   email: string;
-  imageUrl: URL;
+  imageUrl: URL | string;
   bio: string;
 };
 
@@ -52,7 +52,7 @@ export type IUpdatePost = {
   postId: string;
   caption: string;
   imageId: string;
-  imageUrl: URL;
+  imageUrl: URL | string;
   file: File[];
   location?: string;
   tags?: string;

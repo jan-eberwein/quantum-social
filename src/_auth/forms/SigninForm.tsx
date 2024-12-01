@@ -22,9 +22,13 @@ const SigninForm = () => {
   // Query
   const { mutateAsync: signInAccount } = useSignInAccount();
 
-  const form = useForm<z.infer<typeof SigninValidation>>({
-    resolver: zodResolver(SigninValidation),
-  });
+    const form = useForm<z.infer<typeof SigninValidation>>({
+        resolver: zodResolver(SigninValidation),
+        defaultValues: {
+            email: '',
+            password: ''
+        }
+    });
 
 
   const handleSignin = async (user: z.infer<typeof SigninValidation>) => {
