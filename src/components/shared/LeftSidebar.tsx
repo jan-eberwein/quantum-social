@@ -61,9 +61,9 @@ const LeftSidebar = () => {
         </Link>
         <Link to={`/profile/${user?.id}`} className="flex items-center gap-3">
           <img
-            src={user.imageUrl || "/assets/images/profile-picture-dummy.png"}
-            alt="profile"
-            className="rounded-full h-8 w-8"
+              src={(user.imageUrl instanceof URL ? user.imageUrl.toString() : user.imageUrl) || "/assets/images/profile-picture-dummy.png"}
+              alt="profile"
+              className="rounded-full h-8 w-8"
           />
           <div className="flex flex-col">
             <p className="body-bild">{user.name}</p>
@@ -75,7 +75,7 @@ const LeftSidebar = () => {
             const isActive = pathname === link.route;
 
             return (
-              <li
+                <li
                 key={link.label}
                 className={`leftsidebar-link group ${
                   link.label === "Create Post"
