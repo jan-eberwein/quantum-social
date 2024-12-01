@@ -10,7 +10,7 @@ import {
   deletePost,
   deleteSavedPost,
   getCurrentUser,
-  getInfinitPosts,
+  getInfinitePosts,
   getPostById,
   getRecentPosts,
   likePost,
@@ -26,6 +26,7 @@ import {
 } from "../appwrite/api";
 import { INewPost, INewUser, IUpdatePost, IUpdateUser } from "@/types";
 import { QUERY_KEYS } from "@/lib/react-query/queryKeys";
+import { Models } from 'appwrite';
 
 export const useCreateUserAccount = () => {
   return useMutation({
@@ -175,17 +176,22 @@ export const useDeletePost = () => {
   });
 };
 
-export const useGetPosts = () => {
-  return useInfiniteQuery({
-    queryKey: [QUERY_KEYS.GET_INFINITE_POSTS],
-    queryFn: getInfinitPosts,
-    getNextPageParam: (lastPage) => {
-      if (lastPage && lastPage.documents.length === 0) return null;
+type DocumentList<T> = Models.DocumentList<T>;
 
-      const lastId = lastPage.documents[lastPage?.documents.length - 1].$id;
+export const useGetPosts = () => {
+  return useInfiniteQuery<DocumentList<any>, Error>({
+    queryKey: [QUERY_KEYS.GET_INFINITE_POSTS],
+    queryFn: getInfinitePosts,
+    getNextPageParam: (lastPage) => {
+      if (!lastPage || !lastPage.documents || lastPage.documents.length === 0) {
+        return null;
+      }
+
+      const lastId = lastPage.documents[lastPage.documents.length - 1].$id;
 
       return lastId;
     },
+    initialPageParam: undefined,
   });
 };
 

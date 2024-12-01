@@ -1,6 +1,7 @@
-import { ID, Query } from "appwrite";
-import { appwriteConfig, account, databases, storage, avatars } from "./config";
-import { INewPost, INewUser, IUpdatePost, IUpdateUser } from "@/types";
+import {ID, ImageGravity, Query} from "appwrite";
+import {account, appwriteConfig, avatars, databases, storage} from "./config";
+import {INewPost, INewUser, IUpdatePost, IUpdateUser} from "@/types";
+import {QueryFunctionContext} from '@tanstack/react-query';
 
 export async function createUserAccount(user: INewUser) {
   try {
@@ -221,7 +222,7 @@ export function getFilePreview(fileId: string) {
       fileId,
       2000,
       2000,
-      "top",
+      ImageGravity.Top,
       100
     );
 
@@ -408,30 +409,27 @@ export async function deletePost(postId?: string, imageId?: string) {
   }
 }
 
-export async function getInfinitPosts({
-  pageParameters,
-}: {
-  pageParameters: number;
-}) {
-  const qposts: any[] = [Query.orderDesc("$updatedAt"), Query.limit(10)];
+export async function getInfinitePosts(
+    context: QueryFunctionContext
+)  {
+  const { pageParam } = context; // Extract pageParam from the context
+  const qposts: any[] = [Query.orderDesc("$updatedAt"), Query.limit(3)];
 
-  if (pageParameters) {
-    qposts.push(Query.cursorAfter(pageParameters.toString()));
+  if (pageParam) {
+    qposts.push(Query.cursorAfter(pageParam.toString()));
   }
 
-  try {
-    const posts = await databases.listDocuments(
+  const posts = await databases.listDocuments<any>(
       appwriteConfig.databaseId,
       appwriteConfig.postCollectionId,
       qposts
-    );
+  );
 
-    if (!posts) throw Error;
-
-    return posts;
-  } catch (error) {
-    console.log(error);
+  if (!posts) {
+    throw new Error("Failed to fetch posts");
   }
+
+  return posts;
 }
 
 export async function searchPosts(searchTerm: string) {
