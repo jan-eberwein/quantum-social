@@ -61,7 +61,6 @@ describe('UpdateProfile Component', () => {
             </MemoryRouter>
         );
 
-        // Using getAllByLabelText and selecting the specific index
         expect(screen.getByLabelText(/Name/)).toBeInTheDocument();
         expect(screen.getByLabelText(/username/i)).toBeInTheDocument();
         expect(screen.getByLabelText(/email/i)).toBeInTheDocument();

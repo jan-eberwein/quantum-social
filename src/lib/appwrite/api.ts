@@ -413,7 +413,7 @@ export async function getInfinitePosts(
     context: QueryFunctionContext
 )  {
   const { pageParam } = context; // Extract pageParam from the context
-  const qposts: any[] = [Query.orderDesc("$updatedAt"), Query.limit(3)];
+  const qposts: any[] = [Query.orderDesc("$updatedAt"), Query.limit(6)];
 
   if (pageParam) {
     qposts.push(Query.cursorAfter(pageParam.toString()));
