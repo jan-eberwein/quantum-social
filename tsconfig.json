@@ -6,16 +6,13 @@
     "jsx": "react-jsx",
     "strict": true,
     "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
     "skipLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "*": ["node_modules/*"],
       "@/*": ["./src/*"]
     }
   },
-  "include": [
-    "src/**/*", // Include all your source files
-    "**/*.d.ts", // Include type declaration files
-    "globals.css" // Ensure CSS files are included
-  ],
+  "include": ["src/**/*", "**/*.d.ts", "globals.css"],
+  "exclude": ["node_modules", "dist", "**/*.test.ts", "**/*.test.tsx"]
 }
