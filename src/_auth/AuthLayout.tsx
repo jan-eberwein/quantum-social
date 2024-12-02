@@ -1,4 +1,4 @@
-import { Outlet, Navigate } from 'react-router-dom';
+import { Outlet, Navigate } from "react-router-dom";
 
 const AuthLayout = () => {
   const isAuthenticated = false;
@@ -18,11 +18,10 @@ const AuthLayout = () => {
             alt="side image"
             className="hidden xl:block h-screen w-1/2 object-cover bg-no-repeat"
           />
-
         </>
       )}
     </>
-  )
-}
+  );
+};
 
-export default AuthLayout
+export default AuthLayout;

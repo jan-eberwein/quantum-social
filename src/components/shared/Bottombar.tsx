@@ -12,13 +12,6 @@ const bottombarLinks = [
     route: "/explore",
     label: "Explore",
   },
-  /*
-  {
-    imgURL: "/assets/icons/saved1.svg",
-    route: "/saved",
-    label: "Saved",
-  },
-  */
   {
     imgURL: "/assets/icons/people.svg",
     route: "/all-users",

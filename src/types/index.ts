@@ -33,7 +33,6 @@ export type IUpdateUser = {
   file: File[];
 };
 
-
 export type INavLink = {
   imgURL: string;
   route: string;
@@ -67,3 +66,7 @@ export type IContextType = {
   checkAuthUser: () => Promise<boolean>;
 };
 
+export type SearchResultProps = {
+  isSearchFetching: boolean;
+  searchedPosts: any;
+};

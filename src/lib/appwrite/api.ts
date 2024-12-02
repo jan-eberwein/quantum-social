@@ -1,7 +1,7 @@
-import {ID, ImageGravity, Query} from "appwrite";
-import {account, appwriteConfig, avatars, databases, storage} from "./config";
-import {INewPost, INewUser, IUpdatePost, IUpdateUser} from "@/types";
-import {QueryFunctionContext} from '@tanstack/react-query';
+import { ID, ImageGravity, Query } from "appwrite";
+import { account, appwriteConfig, avatars, databases, storage } from "./config";
+import { INewPost, INewUser, IUpdatePost, IUpdateUser } from "@/types";
+import { QueryFunctionContext } from "@tanstack/react-query";
 
 export async function createUserAccount(user: INewUser) {
   try {
@@ -274,40 +274,6 @@ export async function likePost(postId: string, likesArray: string[]) {
   }
 }
 
-export async function savePost(postId: string, userId: string) {
-  try {
-    const updatedPost = await databases.createDocument(
-      appwriteConfig.databaseId,
-      appwriteConfig.savesCollectionId,
-      ID.unique(),
-      {
-        user: userId,
-        post: postId,
-      }
-    );
-    if (!updatedPost) throw Error;
-
-    return updatedPost;
-  } catch (error) {
-    console.log(error);
-  }
-}
-
-export async function deleteSavedPost(savedId: string) {
-  try {
-    const status = await databases.deleteDocument(
-      appwriteConfig.databaseId,
-      appwriteConfig.savesCollectionId,
-      savedId
-    );
-    if (!status) throw Error;
-
-    return { status: "ok" };
-  } catch (error) {
-    console.log(error);
-  }
-}
-
 export async function getPostById(postId?: string) {
   if (!postId) throw Error;
 
@@ -409,9 +375,7 @@ export async function deletePost(postId?: string, imageId?: string) {
   }
 }
 
-export async function getInfinitePosts(
-    context: QueryFunctionContext
-)  {
+export async function getInfinitePosts(context: QueryFunctionContext) {
   const { pageParam } = context; // Extract pageParam from the context
   const qposts: any[] = [Query.orderDesc("$updatedAt"), Query.limit(6)];
 
@@ -420,9 +384,9 @@ export async function getInfinitePosts(
   }
 
   const posts = await databases.listDocuments<any>(
-      appwriteConfig.databaseId,
-      appwriteConfig.postCollectionId,
-      qposts
+    appwriteConfig.databaseId,
+    appwriteConfig.postCollectionId,
+    qposts
   );
 
   if (!posts) {
@@ -449,9 +413,9 @@ export async function searchPosts(searchTerm: string) {
 export async function getUserById(userId: string) {
   try {
     const user = await databases.getDocument(
-        appwriteConfig.databaseId,
-        appwriteConfig.userCollectionId,
-        userId
+      appwriteConfig.databaseId,
+      appwriteConfig.userCollectionId,
+      userId
     );
 
     if (!user) throw Error;
@@ -487,15 +451,15 @@ export async function updateUser(user: IUpdateUser) {
 
     //  Update user
     const updatedUser = await databases.updateDocument(
-        appwriteConfig.databaseId,
-        appwriteConfig.userCollectionId,
-        user.userId,
-        {
-          name: user.name,
-          bio: user.bio,
-          imageUrl: image.imageUrl,
-          imageId: image.imageId,
-        }
+      appwriteConfig.databaseId,
+      appwriteConfig.userCollectionId,
+      user.userId,
+      {
+        name: user.name,
+        bio: user.bio,
+        imageUrl: image.imageUrl,
+        imageId: image.imageId,
+      }
     );
 
     // Failed to update

@@ -32,13 +32,9 @@ const PostCard = ({ post }: PostCardProps) => {
             <p className="base-medium lg:body-bold text-light-1">
               {post.creator.name}
             </p>
-            <div className="flex-center gap-2 text-light-3">
+            <div className="flex-center gap-2 text-off-white">
               <p className="subtle-semibold lg:small-regular">
-                {formatDateTime(post.$createdAt)}
-              </p>
-              |
-              <p className="subtle-semibold lg:small-regular">
-                {post.location}
+                {formatDateTime(post.$createdAt)} | {post.location}
               </p>
             </div>
           </div>
@@ -60,7 +56,10 @@ const PostCard = ({ post }: PostCardProps) => {
           <p>{post.caption}</p>
           <ul className="flex gap-1 mt-2">
             {post.tags.map((tag: string, index: string) => (
-              <li key={`${tag}${index}`} className="text-light-3 small-regular">
+              <li
+                key={`${tag}${index}`}
+                className="text-primary-500 small-regular"
+              >
                 #{tag}
               </li>
             ))}

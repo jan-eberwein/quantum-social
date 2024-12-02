@@ -3,7 +3,6 @@ import { useToast } from "@/hooks/use-toast";
 import { useGetUsers } from "@/lib/react-query/queriesAndMutations";
 import { Loader } from "@/components/shared";
 
-
 const AllUsers = () => {
   const { toast } = useToast();
 
@@ -11,7 +10,7 @@ const AllUsers = () => {
 
   if (isErrorCreators) {
     toast({ title: "Something went wrong." });
-    
+
     return;
   }
 
@@ -36,5 +35,3 @@ const AllUsers = () => {
 };
 
 export default AllUsers;
-
-

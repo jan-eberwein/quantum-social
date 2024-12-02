@@ -22,13 +22,6 @@ const sidebarLinks = [
     route: "/all-users",
     label: "People",
   },
-  /*
-  {
-    imgURL: "/assets/icons/saved1.svg",
-    route: "/saved",
-    label: "Saved",
-  },
-  */
   {
     imgURL: "/assets/icons/createpost1.svg",
     route: "/create-post",
@@ -55,19 +48,23 @@ const LeftSidebar = () => {
           <img
             src="/assets/images/QuantumLogoWhite.png"
             alt="logo"
-            width={170}
+            width={220}
             height={35}
           />
         </Link>
         <Link to={`/profile/${user?.id}`} className="flex items-center gap-3">
           <img
-              src={(user.imageUrl instanceof URL ? user.imageUrl.toString() : user.imageUrl) || "/assets/images/profile-picture-dummy.png"}
-              alt="profile"
-              className="rounded-full h-8 w-8"
+            src={
+              (user.imageUrl instanceof URL
+                ? user.imageUrl.toString()
+                : user.imageUrl) || "/assets/images/profile-picture-dummy.png"
+            }
+            alt="profile"
+            className="rounded-full h-8 w-8"
           />
           <div className="flex flex-col">
             <p className="body-bild">{user.name}</p>
-            <p className="small-regular text-light-3">@{user.username}</p>
+            <p className="small-regular text-off-white">@{user.username}</p>
           </div>
         </Link>
         <ul className="flex flex-col gap-6">
@@ -75,18 +72,18 @@ const LeftSidebar = () => {
             const isActive = pathname === link.route;
 
             return (
-                <li
+              <li
                 key={link.label}
                 className={`leftsidebar-link group ${
                   link.label === "Create Post"
                     ? `mt-20 ${
                         isActive
                           ? "bg-primary-500 text-white"
-                          : "bg-white text-primary-500 hover:bg-primary-500 hover:text-white"
+                          : "bg-white text-dark-1 hover:bg-primary-500 hover:text-white"
                       }`
                     : isActive
                     ? "bg-primary-500 text-white"
-                    : "text-primary-500 hover:bg-primary-500 hover:text-white"
+                    : "text-light-1 hover:bg-primary-500 hover:text-white"
                 }`}
               >
                 <NavLink

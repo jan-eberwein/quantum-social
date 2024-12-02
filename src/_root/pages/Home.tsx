@@ -4,10 +4,7 @@ import { useGetRecentPosts } from "@/lib/react-query/queriesAndMutations";
 import PostCard from "@/components/shared/PostCard";
 
 const Home = () => {
-  const {
-    data: posts,
-    isLoading: isPostLoading,
-  } = useGetRecentPosts();
+  const { data: posts, isLoading: isPostLoading } = useGetRecentPosts();
 
   // Conditionally render based on loading state and availability of posts
   if (isPostLoading) {

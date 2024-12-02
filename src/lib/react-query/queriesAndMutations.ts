@@ -8,13 +8,11 @@ import {
   createPost,
   createUserAccount,
   deletePost,
-  deleteSavedPost,
   getCurrentUser,
   getInfinitePosts,
   getPostById,
   getRecentPosts,
   likePost,
-  savePost,
   searchPosts,
   signInAccount,
   signOutAccount,
@@ -22,11 +20,11 @@ import {
   updateProfile,
   getUserById,
   updateUser,
-  getUsers
+  getUsers,
 } from "../appwrite/api";
 import { INewPost, INewUser, IUpdatePost, IUpdateUser } from "@/types";
 import { QUERY_KEYS } from "@/lib/react-query/queryKeys";
-import { Models } from 'appwrite';
+import { Models } from "appwrite";
 
 export const useCreateUserAccount = () => {
   return useMutation({
@@ -38,7 +36,7 @@ export const useUpdateProfile = () => {
   return useMutation({
     mutationFn: (user: IUpdateUser) => updateProfile(user),
   });
-}
+};
 
 export const useSignInAccount = () => {
   return useMutation({
@@ -86,43 +84,6 @@ export const useLikePost = () => {
       queryClient.invalidateQueries({
         queryKey: [QUERY_KEYS.GET_POST_BY_ID, data?.$id],
       });
-      queryClient.invalidateQueries({
-        queryKey: [QUERY_KEYS.GET_RECENT_POSTS],
-      });
-      queryClient.invalidateQueries({
-        queryKey: [QUERY_KEYS.GET_POSTS],
-      });
-      queryClient.invalidateQueries({
-        queryKey: [QUERY_KEYS.GET_CURRENT_USER],
-      });
-    },
-  });
-};
-
-export const useSavePost = () => {
-  const queryClient = useQueryClient();
-  return useMutation({
-    mutationFn: ({ postId, userId }: { postId: string; userId: string }) =>
-      savePost(postId, userId),
-    onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: [QUERY_KEYS.GET_RECENT_POSTS],
-      });
-      queryClient.invalidateQueries({
-        queryKey: [QUERY_KEYS.GET_POSTS],
-      });
-      queryClient.invalidateQueries({
-        queryKey: [QUERY_KEYS.GET_CURRENT_USER],
-      });
-    },
-  });
-};
-
-export const useDeleteSavedPost = () => {
-  const queryClient = useQueryClient();
-  return useMutation({
-    mutationFn: (saved: string) => deleteSavedPost(saved),
-    onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: [QUERY_KEYS.GET_RECENT_POSTS],
       });
