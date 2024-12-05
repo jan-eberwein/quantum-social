@@ -1,8 +1,9 @@
 import Bottombar from "@/components/shared/Bottombar";
 import LeftSidebar from "@/components/shared/LeftSidebar";
 import Topbar from "@/components/shared/Topbar";
-import React from "react";
 import { Outlet } from "react-router-dom";
+import { Analytics } from '@vercel/analytics/next';
+
 
 const RootLayout = () => {
   return (
@@ -12,6 +13,7 @@ const RootLayout = () => {
 
       <section className="flex flex-1 h-full">
         <Outlet />
+        <Analytics />
       </section>
 
       <Bottombar />
