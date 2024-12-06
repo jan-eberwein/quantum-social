@@ -1,6 +1,7 @@
 <img width="875" alt="QuantumLogoWhite" src="https://github.com/user-attachments/assets/6f965906-1251-490b-8bf8-c61c2605f1ab">
 
-Simple Social Media Application
+[Simple Social Media Application
+Link to deployed site: https://quantum-social.vercel.app/](https://quantum-social.vercel.app/)
 
 A project developed during the **Hypermedia UX Engineering** course at **FH Oberösterreich Campus Hagenberg** Department of **Interactive Media**
 
